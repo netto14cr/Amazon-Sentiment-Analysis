@@ -1,5 +1,6 @@
-# -*- coding: utf-8 -*-
+import sys
 import os
+import webbrowser
 from flask import Flask, jsonify, render_template
 import Sentiment.Sentiment as sentiment
 import pandas as pd
@@ -7,17 +8,25 @@ import chardet
 
 app = Flask(__name__)
 
+def get_template_path(template_name):
+    if getattr(sys, 'frozen', False):
+        # PyInstaller crea el ejecutable
+        template_path = os.path.join(sys._MEIPASS, 'templates', template_name)
+        print("Ejecutando en modo PyInstaller. Ruta de plantilla:", template_path)
+        return template_path
+    else:
+        # Ejecución en modo desarrollo
+        return template_name
 
 
 @app.route('/')
 def index():
-    return render_template('main/index.html')
-
+    return render_template(get_template_path('main/index.html'))
 
 @app.route('/sentiment')
 def sentiment_analysis():
     # Renderizar la plantilla sin los comentarios
-    return render_template('sentiment/review.html')
+    return render_template(get_template_path('sentiment/review.html'))
 
 @app.route('/get_comments')
 def get_comments():
@@ -39,7 +48,6 @@ def get_comments():
     # Devolver los comentarios como un objeto JSON
     return jsonify(analyzed_reviews)
 
-
 @app.route('/read_csv')
 def read_csv():
     # Name of the file to read
@@ -54,8 +62,7 @@ def read_csv():
         data = pd.read_csv(f, encoding=result['encoding'])
 
     # Renderizar la plantilla con los datos del archivo CSV
-    return render_template('csv/csv_table.html', data=data.to_dict(orient='records'))
-
+    return render_template(get_template_path('csv/csv_table.html'), data=data.to_dict(orient='records'))
 
 @app.route('/read_excel')
 def read_excel():
@@ -71,8 +78,13 @@ def read_excel():
     data['Exit Date'] = data['Exit Date'].fillna('Active')
     
     # Render the template with the data from the Excel file
-    return render_template('excel/excel_table.html', data=data.to_dict(orient='records'))
+    return render_template(get_template_path('excel/excel_table.html'), data=data.to_dict(orient='records'))
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Open the web browser
+    url = 'http://localhost'
+    port = 5000
+    full_url = f'{url}:{port}'
+    webbrowser.open(full_url+"/")
+    app.run(debug=False)

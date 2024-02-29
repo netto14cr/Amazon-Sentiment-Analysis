@@ -1,3 +1,4 @@
+altgraph==0.17.4
 blinker==1.7.0
 chardet==5.2.0
 click==8.1.7
@@ -11,11 +12,17 @@ MarkupSafe==2.1.5
 nltk==3.8.1
 numpy==1.26.4
 openpyxl==3.1.2
+packaging==23.2
 pandas==2.2.1
+pefile==2023.2.7
+pyinstaller==6.4.0
+pyinstaller-hooks-contrib==2024.1
 python-dateutil==2.8.2
 pytz==2024.1
+pywin32-ctypes==0.2.2
 regex==2023.12.25
 sentiment==0.0.1
+setuptools==69.1.1
 six==1.16.0
 textblob==0.18.0.post0
 tqdm==4.66.2
