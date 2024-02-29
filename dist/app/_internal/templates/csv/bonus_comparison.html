@@ -1,0 +1,49 @@
+<!-- Salary and Bonus Comparison by Department -->
+<div class="table-responsive">
+    <table class="table table-bordered table-striped dataTable">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Average Annual Salary</th>
+                <th>Average Bonus %</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>IT</td>
+                <td>
+                    {% for record in data %}
+                        {% if record.Department == 'IT' %}
+                            {{ record['Annual Salary'] }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for record in data %}
+                        {% if record.Department == 'IT' %}
+                            {{ record['Bonus %'] }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>Finance</td>
+                <td>
+                    {% for record in data %}
+                        {% if record.Department == 'Finance' %}
+                            {{ record['Annual Salary'] }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for record in data %}
+                        {% if record.Department == 'Finance' %}
+                            {{ record['Bonus %'] }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>

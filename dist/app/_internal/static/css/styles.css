@@ -1,0 +1,17 @@
+/* En tu archivo CSS personalizado */
+
+/* Ajustar el ancho del campo de comentarios */
+.w-50 {
+    width: 150%; /* Puedes ajustar el porcentaje según sea necesario */
+
+}
+
+
+.thalamo-loading {
+    width: 50%;
+    height: auto;
+    display: block;
+    align-content: center;
+    margin-left: 25%;
+
+}

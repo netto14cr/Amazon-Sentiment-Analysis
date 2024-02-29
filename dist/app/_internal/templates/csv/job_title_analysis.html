@@ -1,0 +1,30 @@
+<!-- Job Title Analysis by Department -->
+<div class="table-responsive">
+    <table class="table table-bordered table-striped dataTable">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Job Title</th>
+                <th>Number of Employees</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department, records in data|groupby('Department') %}
+                {% set rows = [] %}
+                {% for job_title, job_records in records|groupby('Job Title') %}
+                    {% set row = [job_title, job_records|length] %}
+                    {% set _ = rows.append(row) %}
+                {% endfor %}
+                {% for row in rows %}
+                    <tr>
+                        {% if loop.first %}
+                            <td rowspan="{{ rows|length }}">{{ department }}</td>
+                        {% endif %}
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
