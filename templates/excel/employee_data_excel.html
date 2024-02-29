@@ -1,0 +1,20 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped dataTable">
+        <thead>
+            <tr>
+                {% for column in data[0] %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in data %}
+            <tr>
+                {% for value in record.values() %}
+                <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,51 @@
+<!-- Salary Comparison by Country or City -->
+<div class="table-responsive">
+    <table class="table table-bordered table-striped dataTable">
+        <thead>
+            <tr>
+                <th>Country/City</th>
+                <th>Salaries</th>
+                <th>Count</th>
+                <th>Average Annual Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for country_or_city, records in data|groupby('Country') %}
+                {% set salaries_count = {} %}
+                {% set total_salary = 0 %}
+                {% set total_count = 0 %}
+                {% for record in records %}
+                    {% set salary = record['Annual Salary'] %}
+                    {% if salary not in salaries_count %}
+                        {% set _ = salaries_count.update({salary: 1}) %}
+                    {% else %}
+                        {% set _ = salaries_count.update({salary: salaries_count[salary] + 1}) %}
+                    {% endif %}
+                    {% set total_salary = total_salary + salary|float %}
+                    {% set total_count = total_count + 1 %}
+                {% endfor %}
+                {% set sorted_salaries_count = salaries_count.items()|sort(attribute='1', reverse=true) %}
+
+                {% if total_count > 0 %}
+                    {% set average_salary = total_salary / total_count %}
+                {% else %}
+                    {% set average_salary = 0 %}
+                {% endif %}
+                <tr>
+                    <td>{{ country_or_city }}</td>
+                    <td>
+                        {% for salary, count in sorted_salaries_count %}
+                            {{ salary }} {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for salary, count in sorted_salaries_count %}
+                            {{ count }} {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ average_salary }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

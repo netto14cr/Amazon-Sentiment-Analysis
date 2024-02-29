@@ -1,0 +1,34 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped dataTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Job Title</th>
+                <th>Department</th>
+                <th>Age</th>
+                <th>Hire Date</th>
+                <th>Annual Salary</th>
+                <th>Country</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department, records in data|groupby('Department') %}
+                {% for record in records %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ record['Full Name'] }}</td>
+                        <td>{{ record['Job Title'] }}</td>
+                        <td>{{ department }}</td>
+                        <td>{{ record['Age'] }}</td>
+                        <td>{{ record['Hire Date'] }}</td>
+                        <td>${{ record['Annual Salary'] }}</td>
+                        <td>{{ record['Country'] }}</td>
+                        <td>{{ record['Exit Date'] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

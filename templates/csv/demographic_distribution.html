@@ -1,0 +1,39 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped dataTable">
+    <thead>
+        <tr>
+            <th>Department/ Business Unit</th>
+            <th>Gender</th>
+            <th>Ethnicity</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>IT, Research & Development</td>
+            <td>
+                {% for record in data %}
+                    {% if record.Department == 'IT' and record['Business Unit'] == 'Research & Development' %}
+                        {{ record.Gender }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for record in data %}
+                    {% if record.Department == 'IT' and record['Business Unit'] == 'Research & Development' %}
+                        {{ record.Ethnicity }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for record in data %}
+                    {% if record.Department == 'IT' and record['Business Unit'] == 'Research & Development' %}
+                        {{ record.Age }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <!-- Agregar más filas según sea necesario para otros departamentos o unidades de negocio -->
+    </tbody>
+</table>
+</div>
