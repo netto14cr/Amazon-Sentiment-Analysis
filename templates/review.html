@@ -1,0 +1,36 @@
+   <!-- Loading image -->
+   <div id="loading" style="display: block;">
+    <img src="{{ url_for('static', filename='loading.gif') }}" alt="Loading...">
+</div>
+
+<!-- Table for comments (initially hidden) -->
+<table class="table table-bordered" id="comments-table" style="display: none;">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Comments</th>
+            <th>% Sentiments</th>
+            <th>Key works</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set counter = namespace(value=0) %}
+        {% for comment, analysis in data %}
+            {% set counter.value = counter.value + 1 %}
+            <tr>
+                <td>{{ counter.value }}</td>
+                <td>{{ comment }}</td>
+                <td>{% if analysis.sentiment_score %}{{ "%.2f" % (analysis.sentiment_score) }}{% endif %}</td>
+                <td>{{ analysis.keywords }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Hide the loading image and show the table when the page is loaded
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("comments-table").style.display = "block";
+    });
+</script>
