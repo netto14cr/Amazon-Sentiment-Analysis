@@ -1,36 +1,64 @@
-   <!-- Loading image -->
-   <div id="loading" style="display: block;">
-    <img src="{{ url_for('static', filename='loading.gif') }}" alt="Loading...">
+<!-- This file is used to display the review of the product. 
+    It will display the comments, 
+    sentiment score and the keywords of the comments. -->
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+    
+<!-- En review.html -->
+
+<!-- Loading image -->
+<div id="loading">
+    <img src="{{ url_for('static', filename='images/loading.gif') }}" alt="Loading..." class="thalamo-loading">
 </div>
 
 <!-- Table for comments (initially hidden) -->
-<table class="table table-bordered" id="comments-table" style="display: none;">
+<table class="table table-bordered table-striped" id="comments-table" style="display: none;">
+    
     <thead>
         <tr>
             <th>#</th>
-            <th>Comments</th>
-            <th>% Sentiments</th>
-            <th>Key works</th>
+            <th class="w-75">Comments</th> <!-- Clase para ajustar el ancho -->
+            <th>Sentiments</th>
+            <th>Key Works</th>
         </tr>
     </thead>
-    <tbody>
-        {% set counter = namespace(value=0) %}
-        {% for comment, analysis in data %}
-            {% set counter.value = counter.value + 1 %}
-            <tr>
-                <td>{{ counter.value }}</td>
-                <td>{{ comment }}</td>
-                <td>{% if analysis.sentiment_score %}{{ "%.2f" % (analysis.sentiment_score) }}{% endif %}</td>
-                <td>{{ analysis.keywords }}</td>
-            </tr>
-        {% endfor %}
+    <tbody id="comments-body">
+        <!-- Los comentarios se agregarán aquí con JavaScript -->
     </tbody>
 </table>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Hide the loading image and show the table when the page is loaded
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("comments-table").style.display = "block";
+        // Mostrar la imagen de carga
+        document.getElementById("loading").style.display = "block";
+
+        // Solicitar los comentarios al servidor
+        fetch("/get_comments")
+        .then(response => response.json())
+        .then(comments => {
+            // Ocultar la imagen de carga y mostrar la tabla
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("comments-table").style.display = "block";
+            
+            // Agregar los comentarios a la tabla
+            let commentsBody = document.getElementById("comments-body");
+            comments.forEach(([comment, analysis], index) => {
+                let row = `
+                    <tr >
+                        <td>${index + 1}</td>
+                        <td>${comment}</td>
+                        <td>${analysis.sentiment_score ? analysis.sentiment_score.toFixed(2) : ''}</td>
+                        <td>${analysis.keywords}</td>
+                    </tr>`;
+                commentsBody.innerHTML += row;
+            });
+        });
     });
 </script>
+
+
+{% endblock %}

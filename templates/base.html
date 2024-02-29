@@ -22,6 +22,15 @@
     <!-- AdminLTE CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css" rel="stylesheet">
     <link rel="manifest" href="/static/manifest.json">
+    <!-- Loading style -->
+    <link href="/static/css/styles.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 
 </head>
 
@@ -30,45 +39,8 @@
 <div class="wrapper">
     
 	
-
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-                    <i class="fas fa-bars"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-
-    <!-- Menú Lateral -->
-        <!-- Menú Lateral -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="/" class="brand-link">
-            <span class="d-none d-sm-block brand-text font-weight-light">Flask Main App</span>
-            <span class="d-sm-none brand-text font-weight-light">Flask Main App</span>
-        </a>
-
-        <div class="sidebar">
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="/" class="nav-link active">
-                        <i class="nav-icon fas fa-home"></i>
-                        <p>Inicio</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="/sentiment" class="nav-link">
-                        <i class="nav-icon fas fa-comment"></i>
-                        <p>Amazon Sentiment Analysis</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </aside>
+    {% include 'navbar.html' %}
+    
 
     <!-- Contenido de la Página -->
     <div class="content-wrapper">
@@ -106,15 +78,6 @@
 </script>
 
 
-<!-- Carga de install.js -->
-<script src="/static/js/install.js"></script>
-
-
-	
-<!-- Botón de instalación PWA -->
-<button type="button" class="btn btn-info" id="installButton" onclick="installPWA()">
-    <i class="fas fa-download"></i> Instalar PWA
-</button>
 
 </div>
 </body>

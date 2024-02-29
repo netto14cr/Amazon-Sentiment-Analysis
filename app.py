@@ -3,6 +3,7 @@ import os
 from flask import Flask, jsonify, render_template
 import Sentiment.Sentiment as sentiment
 import pandas as pd
+import chardet
 
 app = Flask(__name__)
 
@@ -37,6 +38,25 @@ def get_comments():
     
     # Devolver los comentarios como un objeto JSON
     return jsonify(analyzed_reviews)
+
+
+@app.route('/read_excel')
+def read_excel():
+    # Name of the file to read
+    csv_employee = 'Employee Sample Data.csv'
+    # Get the path to the CSV file
+    csv_employee_file = os.path.join(app.root_path, 'static', "files/"+csv_employee)
+    
+    # Detectar la codificación del archivo CSV y leer el archivo CSV utilizando la codificación detectada
+    with open(csv_employee_file, 'rb') as f:
+        result = chardet.detect(f.read())
+        f.seek(0)  # Reset the file pointer to the beginning
+        data = pd.read_csv(f, encoding=result['encoding'])
+
+    # Renderizar la plantilla con los datos del archivo CSV
+    return render_template('read_information.html', data=data.to_dict(orient='records'))
+
+
 
 
 
