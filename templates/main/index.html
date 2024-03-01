@@ -2,8 +2,63 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-    <h1>Project in Flask</h1>
-    <p> This is a project in Flask that uses the Amazon API to get the reviews of a product and then analyze the sentiment of the comments. </p>
+
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <div class="icon">
+                    <i class="nav-icon fas fa-comment"></i>
+                </div>
+                <p>Analysis Reviews</p>
+                <h3>Amazon Sentiment</h3>
+            </div>
+            <a href="/sentiment" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <div class="icon">
+                    <i class="nav-icon fas fa-file-excel"></i>
+                </div>
+                <p>Csv Functions</p>
+                <h3>Read Employee CSV</h3>
+            </div>
+            <a href="/read_csv" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <div class="icon">
+                    <i class="nav-icon fas fa-chart-pie"></i>
+                </div>
+                <p>Excel Functions</p>
+                <h3>Read Employee Excel</h3>
+            </div>
+            <a href="/read_excel" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <div class="icon">
+                    <i class="nav-icon fas fa-file-code"></i>
+                </div>
+                <p>PDF Functions</p>
+                <h3>Split pdf</h3>
+            </div>
+            <a href="/view_pdf" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}
 
 
