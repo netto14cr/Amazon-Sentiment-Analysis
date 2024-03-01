@@ -1,11 +1,27 @@
 import sys
 import os
 import webbrowser
-from flask import Flask, jsonify, render_template
+
+from flask import Flask, jsonify, render_template, request ,send_file,redirect, url_for,make_response
+
 import pandas as pd
 import chardet
 import webview
 import Sentiment.Sentiment as sentiment
+
+from PyPDF2 import PdfReader, PdfWriter
+from openpyxl import Workbook
+from datetime import datetime
+
+import tabula
+from tempfile import NamedTemporaryFile
+from datetime import datetime
+import pandas as pd
+import xlsxwriter
+
+import fitz  # PyMuPDF
+import camelot
+
 
 
 app = Flask(__name__)
@@ -73,6 +89,87 @@ def read_excel():
     return render_template('excel/excel_table.html', data=data.to_dict(orient='records'))
 
 
+from datetime import datetime
+
+@app.route('/split_pdf', methods=['POST'])
+def split_pdf():
+    pdf_file = request.files['pdf_file']
+    pages = request.form['pages']
+    
+    # Parse the pages input to handle ranges and individual pages
+    pages_to_split = []
+    for part in pages.split(','):
+        if '-' in part:
+            start, end = map(int, part.split('-'))
+            pages_to_split.extend(range(start, end + 1))
+        else:
+            pages_to_split.append(int(part))
+    
+    pdf = PdfReader(pdf_file)
+    output_pdf = PdfWriter()
+
+    for page_num in pages_to_split:
+        output_pdf.add_page(pdf.pages[page_num - 1])
+
+    # Generate the filename with current date and time
+    current_datetime = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    output_filename = f'extracted_pages_{current_datetime}.pdf'
+    output_path = os.path.join(app.root_path, 'static', 'pdf', output_filename)
+
+    with open(output_path, 'wb') as output:
+        output_pdf.write(output)
+
+    return redirect(url_for('remaining_pdf', filename=output_filename))
+
+
+
+
+@app.route('/download_xlsx/<filename>')
+def download_xlsx(filename):
+    pdf_path = os.path.join(app.root_path, 'static', 'pdf', filename)
+    
+    # Extract tables from the PDF
+    tables = camelot.read_pdf(pdf_path, pages='all', flavor='stream', strip_text='\n', suppress_stdout=True)
+    
+    # Save each table as a separate sheet in the Excel file
+    excel_filename = f"{filename.split('.')[0]}.xlsx"
+    excel_path = os.path.join(app.root_path, 'static', 'excel', excel_filename)
+    
+    with pd.ExcelWriter(excel_path) as writer:
+        for i, table in enumerate(tables):
+            df = table.df
+            df.to_excel(writer, sheet_name=f'Sheet_{i+1}', index=False)
+    
+    # Return the Excel file for download
+    return send_file(excel_path, as_attachment=True)
+
+
+
+
+@app.route('/remaining_pdf/<filename>')
+def remaining_pdf(filename):
+    return render_template('pdf/remaining_pdf.html', filename=filename)
+
+
+@app.route('/download_pdf')
+def download_pdf():
+    return send_file('extracted_pages.pdf', as_attachment=True)
+
+
+
+@app.route('/view_pdf_tables/<filename>')
+def view_pdf_tables(filename):
+    pdf_path = os.path.join(app.root_path, 'static', 'pdf', filename)
+    tables = camelot.read_pdf(pdf_path, pages='all', flavor='stream')
+
+    # Render the tables in an HTML template
+    return render_template('pdf/view_pdf_tables.html', tables=tables)
+
+
+@app.route('/view_pdf')
+def view_pdf():
+    return render_template('pdf/split_PDF.html')
+
 
 webview.create_window('Flask App', app, resizable=True)
 
@@ -80,4 +177,8 @@ webview.create_window('Flask App', app, resizable=True)
 if __name__ == '__main__':
     # Run the app    
     webview.start()
-
+    
+    #---- For development ----
+    #url = "http://localhost:5000/"
+    #webbrowser.open(url)
+    #app.run(debug=True)

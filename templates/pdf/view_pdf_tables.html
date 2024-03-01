@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div id="accordion">
+    {% for table in tables %}
+    <div class="card card-primary card-outline col-lg-12 mx-auto">
+        <a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapse{{ loop.index }}"
+            aria-expanded="false">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    {{ loop.index }}. Table 
+                </h4>
+            </div>
+        </a>
+        <div id="collapse{{ loop.index }}" class="collapse" data-parent="#accordion" style="">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped dataTable">
+                        {% for row in table.df.values %}
+                        <tr>
+                            {% for cell in row %}
+                            <td>{{ cell }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
