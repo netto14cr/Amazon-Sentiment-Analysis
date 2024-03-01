@@ -1,68 +1,70 @@
-
 {% extends 'main/base.html' %}
 
 {% block content %}
 
 <div class="row">
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-info">
-            <div class="inner">
-                <div class="icon">
-                    <i class="nav-icon fas fa-comment"></i>
-                </div>
-                <p>Analysis Reviews</p>
-                <h3>Amazon Sentiment</h3>
-            </div>
-            <a href="/sentiment" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
     
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-success">
-            <div class="inner">
-                <div class="icon">
-                    <i class="nav-icon fas fa-file-excel"></i>
+        <a href="/read_csv">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <div class="icon">
+                        <i class="nav-icon fas fa-file-excel"></i>
+                    </div>
+                    <p>Csv Functions</p>
+                    <h3>Read Employee CSV</h3>
                 </div>
-                <p>Csv Functions</p>
-                <h3>Read Employee CSV</h3>
+                <a href="/read_csv" class="small-box-footer">View More <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <a href="/read_csv" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        </a>
     </div>
-    
+
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-warning">
-            <div class="inner">
-                <div class="icon">
-                    <i class="nav-icon fas fa-chart-pie"></i>
+        <a href="/read_excel">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <div class="icon">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                    </div>
+                    <p>Excel Functions</p>
+                    <h3>Employee Excel</h3>
                 </div>
-                <p>Excel Functions</p>
-                <h3>Read Employee Excel</h3>
+                <a href="/read_excel" class="small-box-footer">View More <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <a href="/read_excel" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        </a>
     </div>
-    
+
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-danger">
-            <div class="inner">
-                <div class="icon">
-                    <i class="nav-icon fas fa-file-code"></i>
+        <a href="/sentiment">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <div class="icon">
+                        <i class="nav-icon fas fa-comment"></i>
+                    </div>
+                    <p>Analysis Reviews</p>
+                    <h3>Amazon Sentiment</h3>
                 </div>
-                <p>PDF Functions</p>
-                <h3>Split pdf</h3>
+                <a href="/sentiment" class="small-box-footer">View More <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <a href="/view_pdf" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <a href="/view_pdf">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <div class="icon">
+                        <i class="nav-icon fas fa-file-code"></i>
+                    </div>
+                    <p>PDF's Functions</p>
+                    <h3>Split pdf</h3>
+                </div>
+                <a href="/view_pdf" class="small-box-footer">View More <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </a>
     </div>
 </div>
 
 
 
 {% endblock %}
-
-
-
-    
-
-

@@ -171,7 +171,7 @@ def view_pdf():
     return render_template('pdf/split_PDF.html')
 
 
-webview.create_window('Flask App', app, resizable=True)
+webview.create_window('Flask App', app, resizable=True,maximized=True)
 
 
 if __name__ == '__main__':
